@@ -1,4 +1,6 @@
-﻿using Infrastructure.Loading.Scene;
+﻿using Gameplay.Cameras;
+using Gameplay.Input;
+using Infrastructure.Loading.Scene;
 using Infrastructure.Services.LogService;
 using Infrastructure.States;
 using Infrastructure.States.States;
@@ -13,6 +15,8 @@ namespace Infrastructure.Installers
             BindSceneLoader();
             BindApplicationStateMachine();
             BindServices();
+            BindCameraProvider();
+            BindInputService();
         }
 
         private void BindServices()
@@ -33,6 +37,16 @@ namespace Infrastructure.Installers
             Container.BindInterfacesAndSelfTo<InitializeState>().AsSingle().WithArguments(stateMachine);
             Container.BindInterfacesAndSelfTo<MenuState>().AsSingle().WithArguments(stateMachine);
             Container.BindInterfacesAndSelfTo<GameState>().AsSingle().WithArguments(stateMachine);
+        }
+        
+        private void BindCameraProvider()
+        {
+            Container.Bind<ICameraProvider>().To<CameraProvider>().AsSingle();
+        }
+        
+        private void BindInputService()
+        {
+            Container.Bind<IInputService>().To<StandaloneInputService>().AsSingle();
         }
     }
 }

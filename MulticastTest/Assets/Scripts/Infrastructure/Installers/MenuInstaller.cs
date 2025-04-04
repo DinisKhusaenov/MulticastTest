@@ -1,4 +1,5 @@
-﻿using Zenject;
+﻿using UI.Menu;
+using Zenject;
 
 namespace Infrastructure.Installers
 {
@@ -6,6 +7,12 @@ namespace Infrastructure.Installers
     {
         public override void InstallBindings()
         {
+            BindPresenters();
+        }
+
+        private void BindPresenters()
+        {
+            Container.Bind<IGameMenuPresenter>().To<GameMenuPresenter>().AsSingle();
         }
     }
 }
