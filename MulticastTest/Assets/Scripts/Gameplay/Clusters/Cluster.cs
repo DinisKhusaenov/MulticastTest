@@ -1,43 +1,47 @@
 using System;
-using Gameplay.Cameras;
 using Gameplay.Input;
+using Infrastructure.Services.LogService;
 using TMPro;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using Zenject;
 
-namespace Gameplay.Words
+namespace Gameplay.Clusters
 {
     public class Cluster : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHandler
     {
         public event Action<Cluster> OnDragEnded;
         
         [SerializeField] private TMP_Text _letters;
+        
+        [field: SerializeField, Range(1, 20)] public int ClusterLength { get; private set; }
 
         private IInputService _inputService;
-        private Transform _moveParent;
+        private ILogService _logService;
 
-        public int Length { get; private set; }
+        public string Letters { get; private set; }
 
         [Inject]
-        private void Construct(IInputService inputService)
+        private void Construct(IInputService inputService, ILogService logService)
         {
+            _logService = logService;
             _inputService = inputService;
         }
 
-        public void Initialize(string letters, Transform moveParent)
+        public void Initialize(string letters)
         {
             if (string.IsNullOrEmpty(letters))
                 throw new Exception("Letters can't be empty");
             
+            if (letters.Length != ClusterLength)
+                _logService.LogWarning("The number of letters does not match the length of the cluster");
+            
             _letters.SetText(letters);
-            Length = letters.Length;
-            _moveParent = moveParent;
+            Letters = letters;
         }
 
         public void OnBeginDrag(PointerEventData eventData)
         {
-            transform.SetParent(_moveParent);
         }
 
         public void OnDrag(PointerEventData eventData)

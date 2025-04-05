@@ -20,6 +20,7 @@ namespace Infrastructure.States.States
 
         private void OnLoaded()
         {
+            
         }
 
         public void Exit()
