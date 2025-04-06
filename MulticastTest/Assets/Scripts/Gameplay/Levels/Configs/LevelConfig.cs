@@ -2,7 +2,7 @@ using UnityEngine;
 
 namespace Gameplay.Levels.Configs
 {
-    [CreateAssetMenu(menuName = "Configs", fileName = "LevelConfig")]
+    [CreateAssetMenu(menuName = "Configs/LevelConfig", fileName = "LevelConfig")]
     public class LevelConfig : ScriptableObject
     {
         [field: SerializeField, Range(0, 10)] public int MinClusterLength { get; private set; }

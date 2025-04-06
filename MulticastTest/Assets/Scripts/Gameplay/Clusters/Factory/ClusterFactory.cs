@@ -1,3 +1,4 @@
+using System;
 using Cysharp.Threading.Tasks;
 using Infrastructure.AssetManagement;
 using UnityEngine;
@@ -18,7 +19,7 @@ namespace Gameplay.Clusters.Factory
 
         public async UniTask<Cluster> CreateCluster(Transform parent, string letters)
         {
-            Cluster prefab = await _assetProvider.Load<Cluster>(GetPathByClusterLength(letters.Length));
+            GameObject prefab = await _assetProvider.Load<GameObject>(GetPathByClusterLength(letters.Length));
             var cluster = _instantiator.InstantiatePrefab(prefab, parent);
             cluster.GetComponent<Cluster>().Initialize(letters);
 
@@ -27,7 +28,20 @@ namespace Gameplay.Clusters.Factory
 
         private string GetPathByClusterLength(int length)
         {
-            return "123";
+            switch (length)
+            {
+                case 2:
+                    return AssetPath.ClusterTwoLetters;
+                
+                case 3:
+                    return AssetPath.ClusterThreeLetters;
+                
+                case 4:
+                    return AssetPath.ClusterFourLetters;
+                
+                default:
+                    throw new Exception($"Cluster by length {length} does not exist");
+            }
         }
     }
 }

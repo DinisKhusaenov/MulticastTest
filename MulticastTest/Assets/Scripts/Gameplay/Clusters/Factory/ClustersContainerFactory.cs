@@ -5,25 +5,23 @@ using Zenject;
 
 namespace Gameplay.Clusters.Factory
 {
-    public class WordsContainerFactory : IWordsContainerFactory
+    public class ClustersContainerFactory : IClustersContainerFactory
     {
         private readonly IAssetProvider _assetProvider;
         private readonly IInstantiator _instantiator;
 
-        private string path = "";
-
-        public WordsContainerFactory(IAssetProvider assetProvider, IInstantiator instantiator)
+        public ClustersContainerFactory(IAssetProvider assetProvider, IInstantiator instantiator)
         {
             _assetProvider = assetProvider;
             _instantiator = instantiator;
         }
 
-        public async UniTask<WordsContainer> CreateWordsContainer(Transform parent)
+        public async UniTask<ClustersClusterContainer> CreateClustersContainer(Transform parent)
         {
-            Cluster prefab = await _assetProvider.Load<Cluster>(path);
+            GameObject prefab = await _assetProvider.Load<GameObject>(AssetPath.ClustersContainer);
             var cluster = _instantiator.InstantiatePrefab(prefab, parent);
 
-            return cluster.GetComponent<WordsContainer>();
+            return cluster.GetComponent<ClustersClusterContainer>();
         }
     }
 }

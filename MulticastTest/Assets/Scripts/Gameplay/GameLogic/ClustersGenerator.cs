@@ -1,5 +1,7 @@
 using System;
 using System.Collections.Generic;
+using UnityEngine;
+using Random = System.Random;
 
 namespace GameLogic.Gameplay.GameLogic
 {
@@ -36,36 +38,25 @@ namespace GameLogic.Gameplay.GameLogic
         
         private List<string> RandomSplit(string word)
         {
+            if (word.Length < _minLength)
+                return new List<string> { word };
+
             var result = new List<string>();
-            int i = 0;
+            string remaining = word;
 
-            while (i < word.Length)
+            while (remaining.Length > 0)
             {
-                int remaining = word.Length - i;
-
-                // Если остаток меньше или равен максимальной длине, просто добиваем остаток
-                if (remaining <= _maxLength)
+                if (remaining.Length <= _maxLength)
                 {
-                    if (remaining >= _minLength)
-                    {
-                        result.Add(word.Substring(i, remaining));
-                    }
-                    else
-                    {
-                        // Присоединяем к предыдущему кластеру
-                        if (result.Count > 0)
-                            result[result.Count - 1] += word.Substring(i, remaining);
-                        else
-                            result.Add(word.Substring(i, remaining)); // на случай, если слово меньше minLength
-                    }
+                    result.Add(remaining);
                     break;
                 }
 
-                int maxPossible = Math.Min(_maxLength, remaining - _minLength);
-                int clusterSize = _random.Next(_minLength, maxPossible + 1);
+                int maxSize = Math.Min(_maxLength, remaining.Length - _minLength);
+                int size = _random.Next(_minLength, maxSize + 1);
 
-                result.Add(word.Substring(i, clusterSize));
-                i += clusterSize;
+                result.Add(remaining.Substring(0, size));
+                remaining = remaining.Substring(size);
             }
 
             return result;

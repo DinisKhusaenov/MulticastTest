@@ -5,7 +5,7 @@ namespace Gameplay.StaticData
 {
     public class StaticDataService : IStaticDataService
     {
-        private const string LevelConfigPath = "Configs/Abilities";
+        private const string LevelConfigPath = "Configs/Level/LevelConfig";
         
         public LevelConfig LevelConfig { get; private set; }
 

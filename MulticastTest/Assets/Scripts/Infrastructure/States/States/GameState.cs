@@ -1,4 +1,6 @@
-﻿using Infrastructure.Loading.Scene;
+﻿using Infrastructure.EntryPoints;
+using Infrastructure.Loading.Scene;
+using UnityEngine;
 
 namespace Infrastructure.States.States
 {
@@ -20,7 +22,6 @@ namespace Infrastructure.States.States
 
         private void OnLoaded()
         {
-            
         }
 
         public void Exit()

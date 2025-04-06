@@ -1,5 +1,7 @@
 ﻿using GameLogic.Gameplay.GameLogic;
 using Gameplay.Clusters.Factory;
+using Gameplay.Levels;
+using Infrastructure.Loading.Level;
 using Zenject;
 
 namespace Infrastructure.Installers
@@ -9,18 +11,19 @@ namespace Infrastructure.Installers
         public override void InstallBindings()
         {
             BindFactories();
-            BindGameLogicServices();
+            BindLevelServices();
         }
 
-        private void BindGameLogicServices()
+        private void BindLevelServices()
         {
-            Container.Bind<IClustersGenerator>().To<ClustersGenerator>().AsSingle();
+            Container.Bind<ILevelDataLoader>().To<LevelDataLoader>().AsSingle();
+            Container.Bind<ILevelSessionService>().To<LevelSessionService>().AsSingle();
         }
 
         private void BindFactories()
         {
             Container.Bind<IClusterFactory>().To<ClusterFactory>().AsSingle();
-            Container.Bind<IWordsContainerFactory>().To<WordsContainerFactory>().AsSingle();
+            Container.Bind<IClustersContainerFactory>().To<ClustersContainerFactory>().AsSingle();
         }
     }
 }

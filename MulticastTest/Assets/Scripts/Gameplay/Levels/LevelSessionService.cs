@@ -4,6 +4,7 @@ using Cysharp.Threading.Tasks;
 using GameLogic.Gameplay.GameLogic;
 using Gameplay.Clusters;
 using Gameplay.Clusters.Factory;
+using Gameplay.Placer;
 using Gameplay.StaticData;
 using Infrastructure.Loading.Level;
 using UnityEngine;
@@ -12,45 +13,56 @@ namespace Gameplay.Levels
 {
     public class LevelSessionService : ILevelSessionService
     {
-        private readonly IWordsContainerFactory _wordsContainerFactory;
+        private readonly IClustersContainerFactory _clustersContainerFactory;
         private readonly IClusterFactory _clusterFactory;
         private readonly IStaticDataService _staticDataService;
         private readonly ILevelDataLoader _levelDataLoader;
-        private readonly IClustersGenerator _clustersGenerator;
         
-        private readonly List<WordsContainer> _words = new();
+        private readonly List<ClustersClusterContainer> _containers = new();
         private readonly List<Cluster> _clusters = new();
         
+        private IClustersGenerator _clustersGenerator;
+        private IClusterPlacer _clusterPlacer;
         private Transform _clustersParent;
         private Transform _wordsParent;
+        private Transform _moveParent;
         private LevelsData _levelsData;
         private int _currentLevel;
 
         public LevelSessionService(
-            IWordsContainerFactory wordsContainerFactory, 
+            IClustersContainerFactory clustersContainerFactory, 
             IClusterFactory clusterFactory, 
             IStaticDataService staticDataService,
-            ILevelDataLoader levelDataLoader,
-            IClustersGenerator clustersGenerator)
+            ILevelDataLoader levelDataLoader)
         {
-            _wordsContainerFactory = wordsContainerFactory;
+            _clustersContainerFactory = clustersContainerFactory;
             _clusterFactory = clusterFactory;
             _staticDataService = staticDataService;
             _levelDataLoader = levelDataLoader;
-            _clustersGenerator = clustersGenerator;
         }
 
-        public void SetUp(Transform clustersParent, Transform wordsParent)
+        public void SetUp(Transform clustersParent, Transform wordsParent, Transform moveParent)
         {
+            _moveParent = moveParent;
             _clustersParent = clustersParent;
             _wordsParent = wordsParent;
+            
+            _clustersGenerator = new ClustersGenerator(
+                _staticDataService.LevelConfig.MinClusterLength,
+                _staticDataService.LevelConfig.MaxClusterLength);
         }
 
         public async UniTask Run()
         {
             await LoadLevels();
-            CreateContainers().Forget();
-            CreateClusters().Forget();
+            await CreateContainers();
+            await CreateClusters();
+
+            _clusterPlacer = new ClusterPlacer(
+                _moveParent, 
+                _clustersParent, 
+                _containers,
+                _clusters);
         }
 
         public void CleanUp()
@@ -66,20 +78,18 @@ namespace Gameplay.Levels
         {
             for (int i = 0; i < GetWordsCount(); i++)
             {
-                var container = await _wordsContainerFactory.CreateWordsContainer(_wordsParent);
-                _words.Add(container);
+                var container = await _clustersContainerFactory.CreateClustersContainer(_wordsParent);
+                _containers.Add(container);
             }
         }
 
         private async UniTask CreateClusters()
         {
-            for (int i = 0; i < GetWordsCount(); i++)
+            List<string> clusterTexts = _clustersGenerator.GetClusterBy(_levelsData.Levels[_currentLevel]);
+            foreach (string clusterText in clusterTexts)
             {
-                foreach (string clusterText in _clustersGenerator.GetClusterBy(_levelsData.Levels[_currentLevel]))
-                {
-                    Cluster cluster = await _clusterFactory.CreateCluster(_clustersParent, clusterText);
-                    _clusters.Add(cluster);
-                }
+                Cluster cluster = await _clusterFactory.CreateCluster(_clustersParent, clusterText);
+                _clusters.Add(cluster);
             }
         }
 

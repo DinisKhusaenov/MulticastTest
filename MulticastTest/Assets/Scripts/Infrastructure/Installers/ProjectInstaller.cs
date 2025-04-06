@@ -1,6 +1,7 @@
 ﻿using Gameplay.Cameras;
 using Gameplay.Input;
 using Gameplay.StaticData;
+using Infrastructure.AssetManagement;
 using Infrastructure.Loading.Level;
 using Infrastructure.Loading.Scene;
 using Infrastructure.Services.LogService;
@@ -55,7 +56,7 @@ namespace Infrastructure.Installers
         private void BindGameplayServices()
         {
             Container.Bind<IStaticDataService>().To<StaticDataService>().AsSingle();
-            Container.Bind<ILevelDataLoader>().To<LevelDataLoader>().AsSingle();
+            Container.Bind<IAssetProvider>().To<AssetProvider>().AsSingle();
         }
     }
 }

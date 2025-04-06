@@ -10,6 +10,7 @@ namespace Gameplay.Clusters
 {
     public class Cluster : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHandler
     {
+        public event Action<Cluster> OnDragBegun;
         public event Action<Cluster> OnDragEnded;
         
         [SerializeField] private TMP_Text _letters;
@@ -20,6 +21,7 @@ namespace Gameplay.Clusters
         private ILogService _logService;
 
         public string Letters { get; private set; }
+        public IClusterContainer CurrentClusterContainer { get; private set; }
 
         [Inject]
         private void Construct(IInputService inputService, ILogService logService)
@@ -40,8 +42,14 @@ namespace Gameplay.Clusters
             Letters = letters;
         }
 
+        public void SetContainer(IClusterContainer clusterContainer)
+        {
+            CurrentClusterContainer = clusterContainer;
+        }
+
         public void OnBeginDrag(PointerEventData eventData)
         {
+            OnDragBegun?.Invoke(this);
         }
 
         public void OnDrag(PointerEventData eventData)
