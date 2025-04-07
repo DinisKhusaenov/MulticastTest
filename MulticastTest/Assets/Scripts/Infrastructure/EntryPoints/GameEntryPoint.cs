@@ -1,20 +1,26 @@
+using Gameplay.Clusters;
 using Gameplay.Levels;
+using UI.HUD.Service;
 using UnityEngine;
+using UnityEngine.UI;
 using Zenject;
 
 namespace Infrastructure.EntryPoints
 {
     public class GameEntryPoint : MonoBehaviour
     {
-        [SerializeField] private Transform _clusterParent;
+        [SerializeField] private ClustersInitialContainer _clusterParent;
         [SerializeField] private Transform _wordsParent;
         [SerializeField] private Transform _moveClusterParent;
+        [SerializeField] private Button _checkLevelButton;
         
         private ILevelSessionService _levelSessionService;
+        private IHUDService _hudService;
 
         [Inject]
-        private void Construct(ILevelSessionService levelSessionService)
+        private void Construct(ILevelSessionService levelSessionService, IHUDService hudService)
         {
+            _hudService = hudService;
             _levelSessionService = levelSessionService;
         }
 
@@ -22,6 +28,7 @@ namespace Infrastructure.EntryPoints
         {
             _levelSessionService.SetUp(_clusterParent, _wordsParent, _moveClusterParent);
             _levelSessionService.Run();
+            _hudService.Initialize(_checkLevelButton, _levelSessionService);
         }
     }
 }

@@ -6,7 +6,7 @@ namespace Gameplay.Levels
 {
     public class LevelCompletionChecker : ILevelCompletionChecker
     {
-        public bool IsCompleted(List<IClusterContainer> clusterContainers, Level level)
+        public bool IsCompleted(IReadOnlyList<IClusterContainer> clusterContainers, Level level)
         {
             foreach (IClusterContainer clusterContainer in clusterContainers)
             {

@@ -16,12 +16,12 @@ namespace Gameplay.Clusters.Factory
             _instantiator = instantiator;
         }
 
-        public async UniTask<ClustersClusterContainer> CreateClustersContainer(Transform parent)
+        public async UniTask<IClusterContainer> CreateClustersContainer(Transform parent)
         {
             GameObject prefab = await _assetProvider.Load<GameObject>(AssetPath.ClustersContainer);
             var cluster = _instantiator.InstantiatePrefab(prefab, parent);
 
-            return cluster.GetComponent<ClustersClusterContainer>();
+            return cluster.GetComponent<IClusterContainer>();
         }
     }
 }

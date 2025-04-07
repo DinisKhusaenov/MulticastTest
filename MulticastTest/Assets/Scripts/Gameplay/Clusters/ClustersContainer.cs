@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace Gameplay.Clusters
 {
-    public class ClustersClusterContainer : MonoBehaviour, IClusterContainer
+    public class ClustersContainer : MonoBehaviour, IClusterContainer
     {
         [SerializeField, Range(1, 50)] private int _containerSize;
         

@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using Gameplay.Cameras;
 using Gameplay.Clusters;
 using UnityEngine;
 
@@ -6,15 +7,16 @@ namespace Gameplay.Placer
 {
     public class ClusterPlacer : IClusterPlacer
     {
-        private Transform _moveParent;
-        private Transform _clustersStartContainer;
-        private List<ClustersClusterContainer> _clustersContainers;
+        private readonly Transform _moveParent;
+        private readonly IClustersInitialContainer _clustersStartContainer;
+        
+        private List<IClusterContainer> _clustersContainers;
         private List<Cluster> _clusters;
 
         public ClusterPlacer(
             Transform moveParent, 
-            Transform clustersStartContainer, 
-            List<ClustersClusterContainer> clustersContainers, 
+            IClustersInitialContainer clustersStartContainer, 
+            List<IClusterContainer> clustersContainers, 
             List<Cluster> clusters)
         {
             _moveParent = moveParent;
@@ -51,8 +53,7 @@ namespace Gameplay.Placer
 
         private void OnClusterDragEnded(Cluster cluster)
         {
-            float distanceToContainer = float.MaxValue;
-            ClustersClusterContainer clusterContainer = GetClosestClusterContainer(cluster, ref distanceToContainer);
+            IClusterContainer clusterContainer = GetClosestClusterContainer(cluster, out float distanceToContainer);
 
             if (distanceToContainer <= GetDistanceToStartContainer(cluster) &&
                 clusterContainer.FreeSize >= cluster.ClusterLength)
@@ -61,17 +62,19 @@ namespace Gameplay.Placer
             }
             else
             {
-                cluster.transform.SetParent(_clustersStartContainer);
+                cluster.transform.SetParent(_clustersStartContainer.Container);
             }
         }
 
-        private ClustersClusterContainer GetClosestClusterContainer(Cluster cluster, ref float distance)
+        private IClusterContainer GetClosestClusterContainer(Cluster cluster, out float distance)
         {
-            ClustersClusterContainer closestClusterContainer = null;
+            distance = float.MaxValue;
+            IClusterContainer closestClusterContainer = null;
             
-            foreach (ClustersClusterContainer container in _clustersContainers)
+            foreach (IClusterContainer container in _clustersContainers)
             {
-                float distanceToContainer = Vector2.Distance(cluster.transform.position, container.transform.position);
+                float distanceToContainer = Vector2.Distance(cluster.transform.position, container.gameObject.transform.position);
+                
                 if (distance > distanceToContainer)
                 {
                     distance = distanceToContainer;
@@ -84,7 +87,7 @@ namespace Gameplay.Placer
 
         private float GetDistanceToStartContainer(Cluster cluster)
         {
-            return Vector2.Distance(cluster.transform.position, _clustersStartContainer.position);
+            return Vector2.Distance(cluster.transform.position, _clustersStartContainer.Center.position);
         }
     }
 }
