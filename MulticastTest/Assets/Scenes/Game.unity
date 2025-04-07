@@ -171,6 +171,7 @@ MonoBehaviour:
   _wordsParent: {fileID: 937463684}
   _moveClusterParent: {fileID: 231939266}
   _checkLevelButton: {fileID: 1498947453}
+  _hudCanvas: {fileID: 1365518592}
 --- !u!1 &231939265
 GameObject:
   m_ObjectHideFlags: 0

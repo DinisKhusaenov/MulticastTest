@@ -22,7 +22,7 @@ namespace Gameplay.Levels
         private readonly IHUDService _hudService;
 
         private readonly List<IClusterContainer> _containers = new();
-        private readonly List<Cluster> _clusters = new();
+        private readonly List<ICluster> _clusters = new();
         
         private IClustersGenerator _clustersGenerator;
         private IClusterPlacer _clusterPlacer;
@@ -111,7 +111,7 @@ namespace Gameplay.Levels
             List<string> clusterTexts = _clustersGenerator.GetClusterBy(_levelsData.Levels[_currentLevel]);
             foreach (string clusterText in clusterTexts)
             {
-                Cluster cluster = await _clusterFactory.CreateCluster(_clustersInitialContainer.Container, clusterText);
+                ICluster cluster = await _clusterFactory.CreateCluster(_clustersInitialContainer.Container, clusterText);
                 _clusters.Add(cluster);
             }
         }

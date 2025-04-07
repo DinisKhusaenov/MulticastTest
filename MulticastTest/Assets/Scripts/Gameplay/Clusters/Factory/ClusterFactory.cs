@@ -17,13 +17,13 @@ namespace Gameplay.Clusters.Factory
             _instantiator = instantiator;
         }
 
-        public async UniTask<Cluster> CreateCluster(Transform parent, string letters)
+        public async UniTask<ICluster> CreateCluster(Transform parent, string letters)
         {
             GameObject prefab = await _assetProvider.Load<GameObject>(GetPathByClusterLength(letters.Length));
             var cluster = _instantiator.InstantiatePrefab(prefab, parent);
-            cluster.GetComponent<Cluster>().Initialize(letters);
+            cluster.GetComponent<ICluster>().Initialize(letters);
 
-            return cluster.GetComponent<Cluster>();
+            return cluster.GetComponent<ICluster>();
         }
 
         private string GetPathByClusterLength(int length)

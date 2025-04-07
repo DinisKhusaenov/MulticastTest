@@ -11,13 +11,13 @@ namespace Gameplay.Placer
         private readonly IClustersInitialContainer _clustersStartContainer;
         
         private List<IClusterContainer> _clustersContainers;
-        private List<Cluster> _clusters;
+        private List<ICluster> _clusters;
 
         public ClusterPlacer(
             Transform moveParent, 
             IClustersInitialContainer clustersStartContainer, 
             List<IClusterContainer> clustersContainers, 
-            List<Cluster> clusters)
+            List<ICluster> clusters)
         {
             _moveParent = moveParent;
             _clustersStartContainer = clustersStartContainer;
@@ -29,7 +29,7 @@ namespace Gameplay.Placer
         
         public void Dispose()
         {
-            foreach (Cluster cluster in _clusters)
+            foreach (ICluster cluster in _clusters)
             {
                 cluster.OnDragBegun -= OnClusterDragBegun;
                 cluster.OnDragEnded -= OnClusterDragEnded;
@@ -38,7 +38,7 @@ namespace Gameplay.Placer
 
         private void AddEvents()
         {
-            foreach (Cluster cluster in _clusters)
+            foreach (ICluster cluster in _clusters)
             {
                 cluster.OnDragBegun += OnClusterDragBegun;
                 cluster.OnDragEnded += OnClusterDragEnded;

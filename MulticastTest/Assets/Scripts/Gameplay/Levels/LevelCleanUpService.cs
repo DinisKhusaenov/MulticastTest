@@ -7,9 +7,9 @@ namespace Gameplay.Levels
     public class LevelCleanUpService : ILevelCleanUpService
     {
         private List<IClusterContainer> _containers;
-        private List<Cluster> _clusters;
+        private List<ICluster> _clusters;
 
-        public void Initialize(List<IClusterContainer> containers, List<Cluster> clusters)
+        public void Initialize(List<IClusterContainer> containers, List<ICluster> clusters)
         {
             _clusters = clusters;
             _containers = containers;

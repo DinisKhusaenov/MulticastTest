@@ -10,7 +10,7 @@ namespace Gameplay.Clusters
         
         [field: SerializeField] public Transform Container { get; private set; }
 
-        private List<Cluster> _clusters = new();
+        private List<ICluster> _clusters = new();
         private int _filledSize;
 
         public int FreeSize
@@ -23,17 +23,17 @@ namespace Gameplay.Clusters
             }
         }
 
-        public void AddCluster(Cluster cluster)
+        public void AddCluster(ICluster cluster)
         {
             if (!_clusters.Contains(cluster))
             {
                 _clusters.Add(cluster);
-                cluster.transform.SetParent(Container);
+                cluster.gameObject.transform.SetParent(Container);
                 cluster.SetContainer(this);
             }
         }
         
-        public void RemoveCluster(Cluster cluster)
+        public void RemoveCluster(ICluster cluster)
         {
             if (_clusters.Contains(cluster))
             {

@@ -8,7 +8,7 @@ using Zenject;
 
 namespace Gameplay.Clusters
 {
-    public class Cluster : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHandler
+    public class Cluster : MonoBehaviour, ICluster
     {
         public event Action<Cluster> OnDragBegun;
         public event Action<Cluster> OnDragEnded;

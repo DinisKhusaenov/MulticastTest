@@ -5,6 +5,6 @@ namespace Gameplay.Clusters.Factory
 {
     public interface IClusterFactory
     {
-        UniTask<Cluster> CreateCluster(Transform parent, string letters);
+        UniTask<ICluster> CreateCluster(Transform parent, string letters);
     }
 }

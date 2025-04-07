@@ -13,6 +13,7 @@ namespace Infrastructure.EntryPoints
         [SerializeField] private Transform _wordsParent;
         [SerializeField] private Transform _moveClusterParent;
         [SerializeField] private Button _checkLevelButton;
+        [SerializeField] private Canvas _hudCanvas;
         
         private ILevelSessionService _levelSessionService;
         private IHUDService _hudService;
@@ -28,7 +29,7 @@ namespace Infrastructure.EntryPoints
         {
             _levelSessionService.SetUp(_clusterParent, _wordsParent, _moveClusterParent);
             _levelSessionService.Run();
-            _hudService.Initialize(_checkLevelButton, _levelSessionService);
+            _hudService.Initialize(_checkLevelButton, _levelSessionService, _hudCanvas);
         }
     }
 }

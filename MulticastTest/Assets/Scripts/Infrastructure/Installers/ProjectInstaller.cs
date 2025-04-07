@@ -7,6 +7,7 @@ using Infrastructure.Loading.Scene;
 using Infrastructure.Services.LogService;
 using Infrastructure.States;
 using Infrastructure.States.States;
+using UI.HUD.Windows.Factory;
 using Zenject;
 
 namespace Infrastructure.Installers
@@ -21,6 +22,12 @@ namespace Infrastructure.Installers
             BindCameraProvider();
             BindInputService();
             BindGameplayServices();
+            BindUI();
+        }
+
+        private void BindUI()
+        {
+            Container.Bind<IWindowFactory>().To<WindowFactory>().AsSingle();
         }
 
         private void BindServices()

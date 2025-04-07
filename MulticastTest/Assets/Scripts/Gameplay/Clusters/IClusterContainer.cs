@@ -6,8 +6,8 @@ namespace Gameplay.Clusters
     {
         GameObject gameObject { get; }
         int FreeSize { get; }
-        void AddCluster(Cluster cluster);
-        void RemoveCluster(Cluster cluster);
+        void AddCluster(ICluster cluster);
+        void RemoveCluster(ICluster cluster);
         string GetWordFromClusters();
     }
 }
