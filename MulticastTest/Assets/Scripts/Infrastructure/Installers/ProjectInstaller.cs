@@ -3,6 +3,7 @@ using Gameplay.Input;
 using Gameplay.StaticData;
 using Infrastructure.AssetManagement;
 using Infrastructure.Loading.Scene;
+using Infrastructure.PoolService.Factory;
 using Infrastructure.Services.LogService;
 using Infrastructure.States;
 using Infrastructure.States.States;
@@ -16,6 +17,7 @@ namespace Infrastructure.Installers
     public class ProjectInstaller : MonoInstaller
     {
         [SerializeField] private LoadingCurtain _loadingCurtain;
+        
         public override void InstallBindings()
         {
             BindSceneLoader();
@@ -26,8 +28,14 @@ namespace Infrastructure.Installers
             BindGameplayServices();
             BindUI();
             BindLoadingCurtain();
+            BindFactory();
         }
-        
+
+        private void BindFactory()
+        {
+            Container.Bind<IPoolFactory>().To<PoolFactory>().AsSingle();
+        }
+
         private void BindLoadingCurtain()
         {
             Container.BindInterfacesAndSelfTo<LoadingCurtain>().FromComponentInNewPrefab(_loadingCurtain).AsSingle();
