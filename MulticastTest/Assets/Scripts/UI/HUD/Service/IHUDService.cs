@@ -10,7 +10,7 @@ namespace UI.HUD.Service
 {
     public interface IHUDService : IDisposable
     {
-        void Initialize(Button checkLevelButton, ILevelSessionService levelSessionService, Canvas canvas);
+        void Initialize(Button checkLevelButton, ILevelSessionService levelSessionService, Canvas canvas, Button quitButton);
         void InitializeByLevel(IReadOnlyList<IClusterContainer> containers, Level currentLevel);
     }
 }

@@ -2,18 +2,20 @@
 using Gameplay.Input;
 using Gameplay.StaticData;
 using Infrastructure.AssetManagement;
-using Infrastructure.Loading.Level;
 using Infrastructure.Loading.Scene;
 using Infrastructure.Services.LogService;
 using Infrastructure.States;
 using Infrastructure.States.States;
+using UI.HUD.Windows;
 using UI.HUD.Windows.Factory;
+using UnityEngine;
 using Zenject;
 
 namespace Infrastructure.Installers
 {
     public class ProjectInstaller : MonoInstaller
     {
+        [SerializeField] private LoadingCurtain _loadingCurtain;
         public override void InstallBindings()
         {
             BindSceneLoader();
@@ -23,6 +25,12 @@ namespace Infrastructure.Installers
             BindInputService();
             BindGameplayServices();
             BindUI();
+            BindLoadingCurtain();
+        }
+        
+        private void BindLoadingCurtain()
+        {
+            Container.BindInterfacesAndSelfTo<LoadingCurtain>().FromComponentInNewPrefab(_loadingCurtain).AsSingle();
         }
 
         private void BindUI()

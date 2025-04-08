@@ -19,6 +19,7 @@ namespace UI.HUD.Windows
         {
             gameObject.SetActive(true);
 
+            _words.SetText("");
             foreach (string word in words)
             {
                 _words.SetText($"{_words.text}\n{word}");

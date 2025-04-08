@@ -1,4 +1,6 @@
+using Cysharp.Threading.Tasks;
 using Infrastructure.Loading.Scene;
+using UI.HUD.Windows;
 
 namespace Infrastructure.States.States
 {
@@ -6,11 +8,16 @@ namespace Infrastructure.States.States
     {
         private readonly ApplicationStateMachine _applicationStateMachine;
         private readonly ISceneLoadService _sceneLoadService;
+        private readonly ILoadingCurtain _loadingCurtain;
 
-        public InitializeState(ApplicationStateMachine applicationStateMachine, ISceneLoadService sceneLoadService)
+        public InitializeState(
+            ApplicationStateMachine applicationStateMachine, 
+            ISceneLoadService sceneLoadService, 
+            ILoadingCurtain loadingCurtain)
         {
             _applicationStateMachine = applicationStateMachine;
             _sceneLoadService = sceneLoadService;
+            _loadingCurtain = loadingCurtain;
         }
 
         public void Enter()
@@ -22,9 +29,18 @@ namespace Infrastructure.States.States
         {
         }
 
-        private void OnSceneLoaded()
+        private async void OnSceneLoaded()
         {
+            await InitializeData();
+            
             _applicationStateMachine.SwitchState<MenuState>();
+        }
+
+        private async UniTask InitializeData()
+        {
+            _loadingCurtain.Show();
+
+            await UniTask.Delay(1000);
         }
     }
 }

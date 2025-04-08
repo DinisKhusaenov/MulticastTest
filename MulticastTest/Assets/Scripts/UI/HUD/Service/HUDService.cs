@@ -20,6 +20,7 @@ namespace UI.HUD.Service
         private ILevelSessionService _levelSessionService;
         
         private Button _checkLevelButton;
+        private Button _quitButton;
         private IReadOnlyList<IClusterContainer> _containers;
         private Level _currentLevel;
         private Canvas _canvas;
@@ -35,13 +36,15 @@ namespace UI.HUD.Service
             _applicationStateMachine = applicationStateMachine;
         }
 
-        public void Initialize(Button checkLevelButton, ILevelSessionService levelSessionService, Canvas canvas)
+        public void Initialize(Button checkLevelButton, ILevelSessionService levelSessionService, Canvas canvas, Button quitButton)
         {
             _canvas = canvas;
             _checkLevelButton = checkLevelButton;
             _levelSessionService = levelSessionService;
+            _quitButton = quitButton;
             
             _checkLevelButton.onClick.AddListener(CheckLevel);
+            _quitButton.onClick.AddListener(LeaveToMenu);
         }
 
         public void InitializeByLevel(IReadOnlyList<IClusterContainer> containers, Level currentLevel)
@@ -53,6 +56,7 @@ namespace UI.HUD.Service
         public void Dispose()
         {
             _checkLevelButton.onClick.RemoveListener(CheckLevel);
+            _quitButton.onClick.RemoveListener(LeaveToMenu);
         }
         
         private async void CheckLevel()
@@ -64,6 +68,13 @@ namespace UI.HUD.Service
                 _gameOverView.NextLevelClicked += StartNextLevel;
                 _gameOverView.MenuClicked += LeaveToMenu;
             }
+        }
+
+        private void RemoveCallbacks()
+        {
+            if (_gameOverView == null) return;
+            _gameOverView.NextLevelClicked -= StartNextLevel;
+            _gameOverView.MenuClicked -= LeaveToMenu;
         }
 
         private List<string> GetWordsFromContainer()
@@ -83,11 +94,15 @@ namespace UI.HUD.Service
             _gameOverView.Hide();
             _levelSessionService.PrepareNextLevel();
             _levelSessionService.Run();
+
+            RemoveCallbacks();
         }
 
         private void LeaveToMenu()
         {
+            RemoveCallbacks();
             _applicationStateMachine.SwitchState<MenuState>();
         }
+        
     }
 }

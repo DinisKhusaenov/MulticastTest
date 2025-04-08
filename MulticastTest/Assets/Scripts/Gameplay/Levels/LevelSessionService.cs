@@ -8,6 +8,7 @@ using Gameplay.Placer;
 using Gameplay.StaticData;
 using Infrastructure.Loading.Level;
 using UI.HUD.Service;
+using UI.HUD.Windows;
 using UnityEngine;
 
 namespace Gameplay.Levels
@@ -20,6 +21,7 @@ namespace Gameplay.Levels
         private readonly ILevelDataLoader _levelDataLoader;
         private readonly ILevelCleanUpService _levelCleanUpService;
         private readonly IHUDService _hudService;
+        private readonly ILoadingCurtain _loadingCurtain;
 
         private readonly List<IClusterContainer> _containers = new();
         private readonly List<ICluster> _clusters = new();
@@ -38,7 +40,8 @@ namespace Gameplay.Levels
             IStaticDataService staticDataService,
             ILevelDataLoader levelDataLoader,
             ILevelCleanUpService levelCleanUpService,
-            IHUDService hudService)
+            IHUDService hudService,
+            ILoadingCurtain loadingCurtain)
         {
             _clustersContainerFactory = clustersContainerFactory;
             _clusterFactory = clusterFactory;
@@ -46,6 +49,7 @@ namespace Gameplay.Levels
             _levelDataLoader = levelDataLoader;
             _levelCleanUpService = levelCleanUpService;
             _hudService = hudService;
+            _loadingCurtain = loadingCurtain;
         }
 
         public void SetUp(IClustersInitialContainer clustersInitialContainer, Transform wordsParent, Transform moveParent)
@@ -61,6 +65,8 @@ namespace Gameplay.Levels
 
         public async UniTask Run()
         {
+            _loadingCurtain.Show();
+            
             _levelsData ??= await LoadLevels();
             await CreateContainers();
             await CreateClusters();
@@ -73,6 +79,8 @@ namespace Gameplay.Levels
             
             _hudService.InitializeByLevel(_containers, _levelsData.Levels[_currentLevel]);
             _levelCleanUpService.Initialize(_containers, _clusters);
+            
+            _loadingCurtain.Hide();
         }
 
         public void CleanUp()

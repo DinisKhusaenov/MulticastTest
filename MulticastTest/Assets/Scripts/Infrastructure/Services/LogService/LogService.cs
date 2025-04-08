@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 
 namespace Infrastructure.Services.LogService
 {
@@ -40,6 +41,11 @@ namespace Infrastructure.Services.LogService
         
         public void LogError(string msg) => 
             Debug.LogError(msg);
+
+        public void LogError(Exception exception)
+        {
+            Debug.LogError(exception.Message);
+        }
 
         public void LogWarning(string msg) => 
             Debug.LogWarning(msg);
