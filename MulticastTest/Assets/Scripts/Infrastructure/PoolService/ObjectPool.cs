@@ -1,10 +1,11 @@
+using System.Collections;
 using System.Collections.Generic;
 using Infrastructure.PoolService.Factory;
 using UnityEngine;
 
 namespace Infrastructure.PoolService
 {
-    public class ObjectPool<TComponent> where TComponent : MonoBehaviour
+    public class ObjectPool<TComponent> where TComponent : MonoBehaviour, IPullObject
     {
         private readonly IPoolFactory _factory;
         
@@ -12,6 +13,7 @@ namespace Infrastructure.PoolService
         private Stack<TComponent> _entries;
 
         public PoolObjectType Type { get; private set; }
+        public IReadOnlyCollection<TComponent> Entries => _entries;
         
         public ObjectPool(IPoolFactory factory)
         {
@@ -55,6 +57,7 @@ namespace Infrastructure.PoolService
             poolObject.gameObject.SetActive(false);
             poolObject.transform.position = _parent.transform.position;
             poolObject.transform.SetParent(_parent);
+            poolObject.Reset();
             
             _entries.Push(poolObject);
         }

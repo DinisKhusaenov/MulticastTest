@@ -1,5 +1,6 @@
 ﻿using Gameplay.Cameras;
 using Gameplay.Input;
+using Gameplay.Sound;
 using Gameplay.StaticData;
 using Infrastructure.AssetManagement;
 using Infrastructure.Loading.Scene;
@@ -17,6 +18,7 @@ namespace Infrastructure.Installers
     public class ProjectInstaller : MonoInstaller
     {
         [SerializeField] private LoadingCurtain _loadingCurtain;
+        [SerializeField] private SoundService _soundService;
         
         public override void InstallBindings()
         {
@@ -49,6 +51,7 @@ namespace Infrastructure.Installers
         private void BindServices()
         {
             Container.Bind<ILogService>().To<LogService>().AsSingle();
+            Container.BindInterfacesAndSelfTo<SoundService>().FromComponentInNewPrefab(_soundService).AsSingle();
         }
 
         private void BindSceneLoader()

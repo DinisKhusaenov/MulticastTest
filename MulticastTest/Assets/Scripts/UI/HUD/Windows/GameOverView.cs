@@ -22,7 +22,9 @@ namespace UI.HUD.Windows
             _words.SetText("");
             foreach (string word in words)
             {
-                _words.SetText($"{_words.text}\n{word}");
+                _words.SetText(string.IsNullOrEmpty(_words.text) 
+                    ? $"{word}" 
+                    : $"{_words.text}\n{word}");
             }
             
             _nextLevelButton.onClick.AddListener(OnNextLevelClicked);

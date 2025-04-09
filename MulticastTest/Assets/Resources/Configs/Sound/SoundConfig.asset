@@ -1,0 +1,21 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: eb5a22163c3d44babf84bdcf2958c8e2, type: 3}
+  m_Name: SoundConfig
+  m_EditorClassIdentifier: 
+  _soundsData:
+  - SoundType: 1
+    AudioClip: {fileID: 8300000, guid: aace80392669a844f886ff403b0b07b6, type: 3}
+    MixerGroup: {fileID: -5382558649526225848, guid: 43d423fd12df9fd4fbd72cf2d12abfe0, type: 2}
+    isLoop: 1
+  Prefab: {fileID: 5158181255065310822, guid: 3ae390a045525394e8067db7de0e727c, type: 3}
+  PoolCapacity: 8
