@@ -1,4 +1,4 @@
-﻿using Infrastructure.EntryPoints;
+﻿using Gameplay.Cameras;
 using Infrastructure.Loading.Scene;
 using UnityEngine;
 
@@ -8,11 +8,16 @@ namespace Infrastructure.States.States
     {
         private readonly ApplicationStateMachine _applicationStateMachine;
         private readonly ISceneLoadService _sceneLoadService;
+        private readonly ICameraProvider _cameraProvider;
 
-        public GameState(ApplicationStateMachine applicationStateMachine, ISceneLoadService sceneLoadService)
+        public GameState(
+            ApplicationStateMachine applicationStateMachine, 
+            ISceneLoadService sceneLoadService,
+            ICameraProvider cameraProvider)
         {
             _applicationStateMachine = applicationStateMachine;
             _sceneLoadService = sceneLoadService;
+            _cameraProvider = cameraProvider;
         }
 
         public void Enter()
@@ -22,6 +27,7 @@ namespace Infrastructure.States.States
 
         private void OnLoaded()
         {
+            _cameraProvider.SetMainCamera(Camera.main);
         }
 
         public void Exit()

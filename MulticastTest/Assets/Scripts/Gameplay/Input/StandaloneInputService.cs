@@ -9,17 +9,6 @@ namespace Gameplay.Input
         
         private readonly ICameraProvider _cameraProvider;
         private Camera _mainCamera;
-        
-        public Camera CameraMain
-        {
-            get
-            {
-                if(_mainCamera == null && Camera.main != null)
-                    _mainCamera = Camera.main;
-        
-                return _mainCamera;
-            }
-        }
 
         public StandaloneInputService(ICameraProvider cameraProvider)
         {
@@ -32,7 +21,7 @@ namespace Gameplay.Input
             {
                 Vector3 mousePosition = UnityEngine.Input.mousePosition;
                 
-                return CameraMain.
+                return _cameraProvider.MainCamera.
                     ScreenToWorldPoint(new Vector3(
                         mousePosition.x, 
                         mousePosition.y, 
