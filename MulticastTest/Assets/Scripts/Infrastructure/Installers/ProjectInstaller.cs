@@ -77,7 +77,7 @@ namespace Infrastructure.Installers
         
         private void BindInputService()
         {
-            Container.Bind<IInputService>().To<StandaloneInputService>().AsSingle();
+            Container.Bind<IInputService>().To<MobileInputService>().AsSingle();
             Container.Bind<IRemoteConfigService>().To<RemoteConfigService>().AsSingle();
         }
         

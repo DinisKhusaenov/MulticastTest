@@ -12,12 +12,43 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 469c24fdb3bd6431b92cc1465bd9166b, type: 3}
   m_Name: RemoteConfigDataStoreAsset
   m_EditorClassIdentifier: 
-  _rsKeyList: '[]'
-  _rsLastCachedKeyList: '[]'
+  _rsKeyList: "[\r\n  {\r\n    \"metadata\": {\r\n      \"entityId\": \"4127cb3e-7a74-4245-acf4-8131f600ab06\"\r\n   
+    },\r\n    \"rs\": {\r\n      \"key\": \"LevelData\",\r\n      \"type\": \"json\",\r\n     
+    \"schemaId\": null,\r\n      \"value\": {\r\n        \"Levels\": [\r\n         
+    {\r\n            \"CurrentLevel\": 0,\r\n            \"Words\": [\r\n             
+    \"\u041C\u041E\u041B\u041E\u041A\u041E\",\r\n              \"\u041F\u0410\u041B\u042C\u0422\u041E\",\r\n             
+    \"\u041B\u041E\u041F\u0410\u0422\u0410\",\r\n              \"\u0420\u042E\u041A\u0417\u0410\u041A\"\r\n           
+    ]\r\n          },\r\n          {\r\n            \"CurrentLevel\": 1,\r\n           
+    \"Words\": [\r\n              \"\u0421\u041E\u0411\u0410\u041A\u0410\",\r\n             
+    \"\u041F\u0420\u0418\u041B\u0418\u0412\",\r\n              \"\u0411\u0420\u0423\u0421\u041E\u041A\",\r\n             
+    \"\u0414\u041E\u0416\u0414\u0418\u041A\"\r\n            ]\r\n          },\r\n         
+    {\r\n            \"CurrentLevel\": 2,\r\n            \"Words\": [\r\n             
+    \"\u0411\u0418\u0420\u042E\u0417\u0410\",\r\n              \"\u041F\u0410\u041B\u042C\u041C\u0410\",\r\n             
+    \"\u041A\u0410\u0420\u0422\u041E\u041D\",\r\n              \"\u041A\u0423\u0420\u0422\u041A\u0410\"\r\n           
+    ]\r\n          },\r\n          {\r\n            \"CurrentLevel\": 3,\r\n           
+    \"Words\": [\r\n              \"\u0413\u0418\u0422\u0410\u0420\u0410\",\r\n             
+    \"\u0417\u0410\u041C\u0415\u041D\u0410\",\r\n              \"\u0417\u0410\u0416\u0415\u0427\u042C\",\r\n             
+    \"\u0411\u0415\u0420\u0415\u0417\u0410\"\r\n            ]\r\n          }\r\n       
+    ]\r\n      }\r\n    }\r\n  }\r\n]"
+  _rsLastCachedKeyList: "[\r\n  {\r\n    \"metadata\": {\r\n      \"entityId\": \"4127cb3e-7a74-4245-acf4-8131f600ab06\"\r\n   
+    },\r\n    \"rs\": {\r\n      \"key\": \"LevelData\",\r\n      \"type\": \"json\",\r\n     
+    \"schemaId\": null,\r\n      \"value\": {\r\n        \"Levels\": [\r\n         
+    {\r\n            \"CurrentLevel\": 0,\r\n            \"Words\": [\r\n             
+    \"\u041C\u041E\u041B\u041E\u041A\u041E\",\r\n              \"\u041F\u0410\u041B\u042C\u0422\u041E\",\r\n             
+    \"\u041B\u041E\u041F\u0410\u0422\u0410\",\r\n              \"\u0420\u042E\u041A\u0417\u0410\u041A\"\r\n           
+    ]\r\n          },\r\n          {\r\n            \"CurrentLevel\": 1,\r\n           
+    \"Words\": [\r\n              \"\u0421\u041E\u0411\u0410\u041A\u0410\",\r\n             
+    \"\u041F\u0420\u0418\u041B\u0418\u0412\",\r\n              \"\u0411\u0420\u0423\u0421\u041E\u041A\",\r\n             
+    \"\u0414\u041E\u0416\u0414\u0418\u041A\"\r\n            ]\r\n          },\r\n         
+    {\r\n            \"CurrentLevel\": 2,\r\n            \"Words\": [\r\n             
+    \"\u0411\u0418\u0420\u042E\u0417\u0410\",\r\n              \"\u041F\u0410\u041B\u042C\u041C\u0410\",\r\n             
+    \"\u041A\u0410\u0420\u0422\u041E\u041D\",\r\n              \"\u041A\u0423\u0420\u0422\u041A\u0410\"\r\n           
+    ]\r\n          },\r\n          {\r\n            \"CurrentLevel\": 3,\r\n           
+    \"Words\": [\r\n              \"\u0413\u0418\u0422\u0410\u0420\u0410\",\r\n             
+    \"\u0417\u0410\u041C\u0415\u041D\u0410\",\r\n              \"\u0417\u0410\u0416\u0415\u0427\u042C\",\r\n             
+    \"\u0411\u0415\u0420\u0415\u0417\u0410\"\r\n            ]\r\n          }\r\n       
+    ]\r\n      }\r\n    }\r\n  }\r\n]"
   _environments: "[\r\n  {\r\n    \"projectId\": \"08e7d37a-53a1-4c90-ad97-746253987cae\",\r\n   
     \"name\": \"production\",\r\n    \"id\": \"a2917735-b1a0-4b80-8360-98f0d0d01ca7\",\r\n   
     \"isDefault\": true,\r\n    \"createdAt\": \"2025-04-03T14:15:12Z\",\r\n    \"updatedAt\":
-    \"2025-04-03T14:15:12Z\"\r\n  },\r\n  {\r\n    \"projectId\": \"08e7d37a-53a1-4c90-ad97-746253987cae\",\r\n   
-    \"name\": \"development\",\r\n    \"id\": \"a72c72af-fa0f-4450-967c-d991ff053d5e\",\r\n   
-    \"isDefault\": false,\r\n    \"createdAt\": \"2025-04-09T11:56:16Z\",\r\n   
-    \"updatedAt\": \"2025-04-09T11:56:16Z\"\r\n  }\r\n]"
+    \"2025-04-03T14:15:12Z\"\r\n  }\r\n]"
