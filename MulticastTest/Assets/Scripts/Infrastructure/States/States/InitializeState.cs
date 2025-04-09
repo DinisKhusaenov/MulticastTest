@@ -1,5 +1,6 @@
 using Cysharp.Threading.Tasks;
 using Infrastructure.Loading.Scene;
+using Infrastructure.RemoteConfig;
 using UI.HUD.Windows;
 
 namespace Infrastructure.States.States
@@ -9,15 +10,18 @@ namespace Infrastructure.States.States
         private readonly ApplicationStateMachine _applicationStateMachine;
         private readonly ISceneLoadService _sceneLoadService;
         private readonly ILoadingCurtain _loadingCurtain;
+        private readonly IRemoteConfigService _remoteConfigService;
 
         public InitializeState(
             ApplicationStateMachine applicationStateMachine, 
             ISceneLoadService sceneLoadService, 
-            ILoadingCurtain loadingCurtain)
+            ILoadingCurtain loadingCurtain,
+            IRemoteConfigService remoteConfigService)
         {
             _applicationStateMachine = applicationStateMachine;
             _sceneLoadService = sceneLoadService;
             _loadingCurtain = loadingCurtain;
+            _remoteConfigService = remoteConfigService;
         }
 
         public void Enter()
@@ -40,7 +44,7 @@ namespace Infrastructure.States.States
         {
             _loadingCurtain.Show();
 
-            await UniTask.Delay(1000);
+            await _remoteConfigService.Initialize();
         }
     }
 }

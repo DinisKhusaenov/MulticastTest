@@ -5,6 +5,7 @@ using Gameplay.StaticData;
 using Infrastructure.AssetManagement;
 using Infrastructure.Loading.Scene;
 using Infrastructure.PoolService.Factory;
+using Infrastructure.RemoteConfig;
 using Infrastructure.Services.LogService;
 using Infrastructure.States;
 using Infrastructure.States.States;
@@ -77,6 +78,7 @@ namespace Infrastructure.Installers
         private void BindInputService()
         {
             Container.Bind<IInputService>().To<StandaloneInputService>().AsSingle();
+            Container.Bind<IRemoteConfigService>().To<RemoteConfigService>().AsSingle();
         }
         
         private void BindGameplayServices()

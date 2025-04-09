@@ -7,6 +7,7 @@ using Gameplay.Clusters.Factory;
 using Gameplay.Placer;
 using Gameplay.StaticData;
 using Infrastructure.Loading.Level;
+using Infrastructure.RemoteConfig;
 using UI.HUD.Service;
 using UI.HUD.Windows;
 using UnityEngine;
@@ -22,6 +23,7 @@ namespace Gameplay.Levels
         private readonly ILevelCleanUpService _levelCleanUpService;
         private readonly IHUDService _hudService;
         private readonly ILoadingCurtain _loadingCurtain;
+        private readonly IRemoteConfigService _remoteConfigService;
 
         private readonly List<IClusterContainer> _containers = new();
         private readonly List<ICluster> _clusters = new();
@@ -41,7 +43,8 @@ namespace Gameplay.Levels
             ILevelDataLoader levelDataLoader,
             ILevelCleanUpService levelCleanUpService,
             IHUDService hudService,
-            ILoadingCurtain loadingCurtain)
+            ILoadingCurtain loadingCurtain,
+            IRemoteConfigService remoteConfigService)
         {
             _clustersContainerFactory = clustersContainerFactory;
             _clusterFactory = clusterFactory;
@@ -50,6 +53,7 @@ namespace Gameplay.Levels
             _levelCleanUpService = levelCleanUpService;
             _hudService = hudService;
             _loadingCurtain = loadingCurtain;
+            _remoteConfigService = remoteConfigService;
         }
 
         public void SetUp(IClustersInitialContainer clustersInitialContainer, Transform wordsParent, Transform moveParent)
@@ -66,8 +70,8 @@ namespace Gameplay.Levels
         public async UniTask Run()
         {
             _loadingCurtain.Show();
-            
-            _levelsData ??= await LoadLevels();
+
+            await LoadLevels();
             await CreateContainers();
             await CreateClusters();
 
@@ -100,9 +104,18 @@ namespace Gameplay.Levels
                 _currentLevel = 0;
         }
 
-        private async UniTask<LevelsData> LoadLevels()
+        private async UniTask LoadLevels()
         {
-            return await _levelDataLoader.LoadDataAsync();
+            if (_levelsData != null) return;
+            
+            if (_remoteConfigService.Level != null)
+            {
+                _levelsData = _remoteConfigService.Level;
+            }
+            else
+            {
+                _levelsData ??= await _levelDataLoader.LoadDataAsync();
+            }
         }
 
         private async UniTask CreateContainers()
