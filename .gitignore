@@ -68,10 +68,16 @@ crashlytics-build.properties
 
 # Packed Addressables
 /[Aa]ssets/[Aa]ddressable[Aa]ssets[Dd]ata/*/*.bin*
-*/ServerData
+/Assets/AddressableAssetsData/*.link*
+/Assets/AddressableAssetsData/*.json
+/ServerData/
 
 # Temporary auto-generated Android Assets
 /[Aa]ssets/[Ss]treamingAssets/aa.meta
 /[Aa]ssets/[Ss]treamingAssets/aa/*
+
+# Remote Config кэш и данные
+RemoteConfig/Settings/remote-config-settings.json
+RemoteConfig/Settings/remote-config-defaults.json
 
 
