@@ -4,7 +4,7 @@ using Cysharp.Threading.Tasks;
 using GameLogic.Gameplay.GameLogic;
 using Gameplay.Clusters;
 using Gameplay.Clusters.Factory;
-using Gameplay.Placer;
+using Gameplay.Clusters.Placer;
 using Gameplay.StaticData;
 using Infrastructure.Loading.Level;
 using Infrastructure.RemoteConfig;
@@ -90,6 +90,7 @@ namespace Gameplay.Levels
         public void CleanUp()
         {
             _levelCleanUpService.CleanUp();
+            _clusterPlacer.Dispose();
             _clusterPlacer = null;
             _clusters.Clear();
             _containers.Clear();

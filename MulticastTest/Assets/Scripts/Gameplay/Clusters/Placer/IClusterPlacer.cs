@@ -1,6 +1,6 @@
 using System;
 
-namespace Gameplay.Placer
+namespace Gameplay.Clusters.Placer
 {
     public interface IClusterPlacer : IDisposable
     {

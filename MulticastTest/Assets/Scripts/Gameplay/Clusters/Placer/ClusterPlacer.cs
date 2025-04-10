@@ -1,9 +1,7 @@
 using System.Collections.Generic;
-using Gameplay.Cameras;
-using Gameplay.Clusters;
 using UnityEngine;
 
-namespace Gameplay.Placer
+namespace Gameplay.Clusters.Placer
 {
     public class ClusterPlacer : IClusterPlacer
     {
