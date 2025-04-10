@@ -8,6 +8,7 @@ using Infrastructure.PoolService.Factory;
 using Infrastructure.RemoteConfig;
 using Infrastructure.Services.LogService;
 using Infrastructure.States;
+using Infrastructure.States.Factory;
 using Infrastructure.States.States;
 using UI.HUD.Windows;
 using UI.HUD.Windows.Factory;
@@ -37,6 +38,7 @@ namespace Infrastructure.Installers
         private void BindFactory()
         {
             Container.Bind<IPoolFactory>().To<PoolFactory>().AsSingle();
+            Container.Bind<IStateFactory>().To<StateFactory>().AsSingle();
         }
 
         private void BindLoadingCurtain()
@@ -62,12 +64,7 @@ namespace Infrastructure.Installers
 
         private void BindApplicationStateMachine()
         {
-            var stateMachine = new ApplicationStateMachine(Container);
-            Container.BindInterfacesAndSelfTo<ApplicationStateMachine>().FromInstance(stateMachine).AsSingle();
-
-            Container.BindInterfacesAndSelfTo<InitializeState>().AsSingle().WithArguments(stateMachine);
-            Container.BindInterfacesAndSelfTo<MenuState>().AsSingle().WithArguments(stateMachine);
-            Container.BindInterfacesAndSelfTo<GameState>().AsSingle().WithArguments(stateMachine);
+            Container.BindInterfacesAndSelfTo<ApplicationStateMachine>().AsSingle();
         }
         
         private void BindCameraProvider()
