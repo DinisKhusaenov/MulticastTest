@@ -1,27 +1,24 @@
-using Cysharp.Threading.Tasks;
+using System;
 using UnityEngine;
 using UnityEngine.UI;
-using Zenject;
 
 namespace UI.Menu
 {
-    public class GameMenuView : MonoBehaviour
+    public class GameMenuView : MonoBehaviour, IGameMenuView
     {
+        public event Action StartClicked;
+        public event Action SettingsClicked;
+        
         [SerializeField] private Button _startButton;
         [SerializeField] private Button _settings;
 
-        private IGameMenuPresenter _gameMenuPresenter;
-
-        [Inject]
-        private void Construct(IGameMenuPresenter gameMenuPresenter)
+        private void OnEnable()
         {
-            _gameMenuPresenter = gameMenuPresenter;
-            
             _startButton.onClick.AddListener(OnStartClicked);
             _settings.onClick.AddListener(OnSettingsClicked);
         }
 
-        private void OnDestroy()
+        private void OnDisable()
         {
             _startButton.onClick.RemoveListener(OnStartClicked);
             _settings.onClick.RemoveListener(OnSettingsClicked);
@@ -29,12 +26,12 @@ namespace UI.Menu
 
         private void OnStartClicked()
         {
-            _gameMenuPresenter.StartGame();
+            StartClicked?.Invoke();
         }
 
         private void OnSettingsClicked()
         {
-            _gameMenuPresenter.ShowSettings(transform).Forget();
+            SettingsClicked?.Invoke();
         }
     }
 }
