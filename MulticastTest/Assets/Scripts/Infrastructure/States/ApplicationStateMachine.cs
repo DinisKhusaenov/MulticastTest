@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using Infrastructure.StateMachine;
+using Infrastructure.States.Factory;
 using Infrastructure.States.States;
 using Zenject;
 
@@ -8,14 +9,14 @@ namespace Infrastructure.States
 {
     public class ApplicationStateMachine : IStateSwitcher, IInitializable
     {
-        protected readonly DiContainer _container;
+        private readonly IStateFactory _stateFactory;
 
         private List<IState> _states;
         private IState _currentState;
 
-        public ApplicationStateMachine(DiContainer container)
+        public ApplicationStateMachine(IStateFactory stateFactory)
         {
-            _container = container;
+            _stateFactory = stateFactory;
         }
 
         public void SwitchState<State>() where State : IState
@@ -31,9 +32,9 @@ namespace Infrastructure.States
         {
             _states = new List<IState>
             {
-                _container.Resolve<InitializeState>(),
-                _container.Resolve<MenuState>(),
-                _container.Resolve<GameState>()
+                _stateFactory.CreateState<InitializeState>(),
+                _stateFactory.CreateState<MenuState>(),
+                _stateFactory.CreateState<GameState>()
             };
 
             _currentState = _states[0];
